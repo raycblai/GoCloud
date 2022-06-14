@@ -1,23 +1,24 @@
 package main
 
 import (
-    "fmt"
-    "github.com/aws/aws-lambda-go/lambda"
-    //"github.com/aws/aws-lambda-go/events"
-    )
-    
+	"fmt"
+	
+	"github.com/aws/aws-lambda-go/lambda"
+)
+
+type MyEvent struct {
+	FName string `json:"What is your name?"`
+	City string `json:"Where do you live?"`
+}
+
+type MyResponse struct {
+	Message string `json:"Answer:"`
+}
+
+func hello(event MyEvent) (MyResponse, error) {
+	return MyResponse{Message: fmt.Sprintf("Hello %s, I know you live in %s !!", event.FName, event.City)}, nil
+}
+
 func main() {
-    lambda.Start(Handler)
-}
-
-func Handler(event InputEvent) (string, error){
-    // fmt.Println("Function Invoked !!!")
-    fmt.Println(event.firstName)
-    fmt.Println(event.lastName)
-    return "It works !!",nil
-}
-
-type InputEvent struct {
-    firstName string `json:"firstname"`
-    lastName string `json:"lastname"`
+	lambda.Start(hello)
 }
