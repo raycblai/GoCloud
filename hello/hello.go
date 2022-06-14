@@ -1,7 +1,15 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "github.com/aws/aws-lambda-go/lambda"
+)
 
 func main() {
-    fmt.Println("Hello WOrld!")
+    lambda.Start(Handler)
+    
+}
+
+func Handler() {
+    fmt.Println("Function Invoked!")
 }
